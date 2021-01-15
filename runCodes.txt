@@ -1,0 +1,4 @@
+python -m venv ./virtual/ --->create vEnvirement
+.\virtual\Scripts\activate --> in flas_test folder
+pip freeze > requirements.txt
+flask run
