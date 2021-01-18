@@ -71,7 +71,7 @@ def pixelArt():
 def popArt():
     session["output"] = "data:image/png;base64," + \
         filter.popArt(session["image"])
-    session["op_name"] = "POP"
+    session["op_name"] = "BONCUK"
     return redirect(url_for("home"))
 
 
@@ -115,7 +115,17 @@ def lumos():
     session["output"] = "data:image/png;base64," + \
         op.lumos(session["image"], lumen)
 
-    session["op_name"] = "LUMOS MAXIMA"
+    session["op_name"] = "BRIGHT"
+    return redirect(url_for("home"))
+
+
+@app.route("/contrast", methods=['GET'])
+def contrast():
+    contrast = int(request.headers["contrast"])
+    session["output"] = "data:image/png;base64," + \
+        op.contrast(session["image"], contrast)
+
+    session["op_name"] = "CONTRAST"
     return redirect(url_for("home"))
 
 
@@ -202,7 +212,7 @@ def splash():
 def sepya():
     session["output"] = "data:image/png;base64," + \
         filter.sepya(session["image"])
-    session["op_name"] = "SEPYA"
+    session["op_name"] = "SEPIA"
     return redirect(url_for("home"))
 
 
@@ -250,15 +260,15 @@ def balmy():
 def cold():
     session["output"] = "data:image/png;base64," + \
         filter.cold(session["image"])
-    session["op_name"] = "COLD"
+    session["op_name"] = "FROSTBITE"
     return redirect(url_for("home"))
 
 
-@app.route("/sharpener", methods=['GET'])
-def sharpener():
+@app.route("/lines", methods=['GET'])
+def lines():
     session["output"] = "data:image/png;base64," + \
-        filter.sharpener(session["image"])
-    session["op_name"] = "SHARPENER"
+        filter.lines(session["image"])
+    session["op_name"] = "LINES"
     return redirect(url_for("home"))
 
 
@@ -283,6 +293,30 @@ def xpro():
     session["output"] = "data:image/png;base64," + \
         filter.xpro(session["image"])
     session["op_name"] = "XPRO"
+    return redirect(url_for("home"))
+
+
+@app.route("/daylight", methods=['GET'])
+def daylight():
+    session["output"] = "data:image/png;base64," + \
+        filter.daylight(session["image"])
+    session["op_name"] = "DAYLIGHT"
+    return redirect(url_for("home"))
+
+
+@app.route("/moon", methods=['GET'])
+def moon():
+    session["output"] = "data:image/png;base64," + \
+        filter.moon(session["image"])
+    session["op_name"] = "MOON"
+    return redirect(url_for("home"))
+
+
+@app.route("/blueish", methods=['GET'])
+def blueish():
+    session["output"] = "data:image/png;base64," + \
+        filter.blueish(session["image"])
+    session["op_name"] = "BLUEISH"
     return redirect(url_for("home"))
 
 

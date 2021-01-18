@@ -18,11 +18,14 @@ const oilyButton=document.getElementById("oilyButton");
 const autoConButton=document.getElementById("autoConButton");
 const abstractButton=document.getElementById("abstractButton");
 const balmyButton=document.getElementById("balmyButton");
-const sharpenerButton=document.getElementById("sharpenerButton");
+const linesButton=document.getElementById("linesButton");
 const blushButton=document.getElementById("blushButton");
 const coldButton=document.getElementById("coldButton");
 const glassButton=document.getElementById("glassButton");
 const xproButton=document.getElementById("xproButton");
+const daylightButton=document.getElementById("daylightButton");
+const moonButton=document.getElementById("moonButton");
+const blueishButton=document.getElementById("blueishButton");
 
 console.log("sa from image handler");
 
@@ -168,6 +171,20 @@ lumosButton.addEventListener("click", function () {
       
         });
 
+contrastButton.addEventListener("click", function () {
+          const myValue=this.querySelector("output").value;
+            axios({
+              method: "get",
+              url:"contrast",
+              headers: { "Content-Type": "multipart/form-data",
+                         "contrast":myValue }
+            })
+              .then(function (response) {
+                window.location.reload();
+              })
+        
+          });
+  
 cropButton.addEventListener("click", function () {
         axios({
           method: "get",
@@ -321,10 +338,10 @@ coldButton.addEventListener("click", function () {
           })
     
       });
-sharpenerButton.addEventListener("click", function () {
+linesButton.addEventListener("click", function () {
         axios({
           method: "get",
-          url:"sharpener",
+          url:"lines",
           headers: { "Content-Type": "multipart/form-data"}
         })
           .then(function (response) {
@@ -365,5 +382,41 @@ xproButton.addEventListener("click", function () {
           .then(function (response) {
             window.location.reload();
           })
-    
+
+      });
+
+daylightButton.addEventListener("click", function () {
+        axios({
+          method: "get",
+          url:"daylight",
+          headers: { "Content-Type": "multipart/form-data"}
+        })
+          .then(function (response) {
+            window.location.reload();
+          })
+
+      });
+
+moonButton.addEventListener("click", function () {
+        axios({
+          method: "get",
+          url:"moon",
+          headers: { "Content-Type": "multipart/form-data"}
+        })
+          .then(function (response) {
+            window.location.reload();
+          })
+
+      });
+
+blueishButton.addEventListener("click", function () {
+        axios({
+          method: "get",
+          url:"blueish",
+          headers: { "Content-Type": "multipart/form-data"}
+        })
+          .then(function (response) {
+            window.location.reload();
+          })
+
       });

@@ -7,7 +7,10 @@
     <title>Just an Image Editor</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+   <!-- IF USE HTPPS UNCOMMENT THIS- ELSE KEEP IT 
+     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    
+    
     <!--<link href="{{url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css">
 					-->
     <link href="../static/style.css" rel="stylesheet" type="text/css" />
@@ -151,7 +154,7 @@
          </div>
 
          <div class="div-menu"style="height:120px">
-          <a class="menu_btn" id="lumosButton"  style="color:gray" />Lumos Maxima <output id="lumosvalue" style="padding-left:20px">50</output></a>
+          <a class="menu_btn" id="lumosButton"  style="color:gray" />Bright<output id="lumosvalue" style="padding-left:20px">50</output></a>
               <div class="container">
                  <div class="slider">
                     <input id="lumosrslider" type = "range" min="0" max="100" value="50" onchange="lumosvalue.value=value"/>
@@ -159,8 +162,13 @@
               </div>
          </div>
 
-         <div>
-         <a class="menu_btn" id="contrastButton"  apiurl="contrast" style="color:gray" />Contrastitization</a>
+         <div class="div-menu"style="height:120px">
+          <a class="menu_btn" id="contrastButton"  style="color:gray" />Contrast<output id="contrastvalue" style="padding-left:20px">50</output></a>
+              <div class="container">
+                 <div class="slider">
+                    <input id="contrastslider" type = "range" min="0" max="100" value="50" onchange="contrastvalue.value=value"/>
+                  </div>
+              </div>
          </div>
 
       </div>
@@ -187,7 +195,7 @@
         </div>
 
         <div class="div-menu"style="height:90px">
-          <a class="menu_btn" id="popButton" style="color:white" />PopArt</a>
+          <a class="menu_btn" id="popButton" style="color:white" />BoncukArt</a>
         </div>
 
         <div class="div-menu"style="height:90px">
@@ -195,7 +203,7 @@
         </div>
 
         <div class="div-menu"style="height:90px">
-          <a class="menu_btn" id="sketchButton" style="color:white" />Pencil Sketch</a>
+          <a class="menu_btn" id="sketchButton" style="color:white" />Sketch</a>
         </div>
 
         <div class="div-menu"style="height:90px">
@@ -203,7 +211,7 @@
         </div>
 
         <div class="div-menu"style="height:90px">
-          <a class="menu_btn" id="sepyaButton" style="color:white" />Sepya</a>
+          <a class="menu_btn" id="sepyaButton" style="color:white" />Sepia</a>
         </div>
 
         <div class="div-menu"style="height:90px">
@@ -223,11 +231,11 @@
         </div>
 
         <div class="div-menu"style="height:90px">
-          <a class="menu_btn" id="coldButton" style="color:white" />Cold</a>
+          <a class="menu_btn" id="coldButton" style="color:white" />Frostbite</a>
         </div>           
 
         <div class="div-menu"style="height:90px">
-          <a class="menu_btn" id="sharpenerButton" style="color:white" />Sharpener</a>
+          <a class="menu_btn" id="linesButton" style="color:white" />Lines</a>
         </div>         
 
         <div class="div-menu"style="height:90px">
@@ -240,7 +248,20 @@
 
         <div class="div-menu"style="height:90px">
           <a class="menu_btn" id="xproButton" style="color:white" />XPro</a>
-        </div>        
+        </div> 
+       
+        <div class="div-menu"style="height:90px">
+          <a class="menu_btn" id="daylightButton" style="color:white" />Daylight</a>
+        </div> 
+
+        <div class="div-menu"style="height:90px">
+          <a class="menu_btn" id="moonButton" style="color:white" />Moon</a>
+        </div> 
+
+        <div class="div-menu"style="height:90px">
+          <a class="menu_btn" id="blueishButton" style="color:white" />Blueish</a>
+        </div> 
+
       </div>
 
       <div class="footer_wrapper">
@@ -249,6 +270,7 @@
         </div>
       </div>
     </div>
+
   </body>
 
    <script src="https://code.jquery.com/jquery-3.5.1.min.js" /></script>

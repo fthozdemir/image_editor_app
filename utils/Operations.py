@@ -181,3 +181,20 @@ def histogramEqualizer(baseString):
     print(sys._getframe().f_code.co_name +
           " finished in " + "{:.2f}".format(time.time()-start)+" s")
     return img_code
+
+def contrast(baseString, c_value):
+    print(sys._getframe().f_code.co_name + " running")
+    start = time.time()
+    img = b64kit.base64_to_image(baseString)
+    factor = c_value/50.0
+    final=img
+    
+    for y in range(img.shape[0]):
+        for x in range(img.shape[1]):
+            for c in range(img.shape[2]):
+                final[y,x,c] = np.clip(factor*img[y,x,c], 0, 255)
+
+    img_code = b64kit.image_to_base64(final)
+    print(sys._getframe().f_code.co_name +
+          " finished in " + "{:.2f}".format(time.time()-start)+" s")
+    return img_code

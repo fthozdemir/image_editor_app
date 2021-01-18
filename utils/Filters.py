@@ -440,7 +440,7 @@ def cold(baseString):
     return img_code
 
 
-def sharpener(baseString):
+def lines(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
     img = b64kit.base64_to_image(baseString)
@@ -454,6 +454,7 @@ def sharpener(baseString):
             isAlphaExist = True
         except:
             pass
+    final = cv2.Canny(img, 100, 200)
 
     if(isAlphaExist):
         final = np.dstack([final, alpha])
@@ -648,6 +649,151 @@ def xpro(baseString):
     # convert back to BGR color space
     final = cv2.cvtColor(output, cv2.COLOR_YCrCb2BGR)
 
+    if(isAlphaExist):
+        final = np.dstack([final, alpha])
+
+    img_code = b64kit.image_to_base64(final)
+    print(sys._getframe().f_code.co_name +
+          " finished in " + "{:.2f}".format(time.time()-start)+" s")
+    return img_code
+
+
+def daylight(baseString):
+    print(sys._getframe().f_code.co_name + " running")
+    start = time.time()
+    img = b64kit.base64_to_image(baseString)
+    original = img.copy()
+
+    isAlphaExist = False
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
+
+    # convert image to HSV color space
+    image_HLS = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)  # Conversion to HLS
+    image_HLS = np.array(image_HLS, dtype=np.float64)
+    daylight = 1.15
+    # scale pixel values up for channel 1(Lightness)
+    image_HLS[:, :, 1] = image_HLS[:, :, 1]*daylight
+    # Sets all values above 255 to 255
+    image_HLS[:, :, 1][image_HLS[:, :, 1] > 255] = 255
+    image_HLS = np.array(image_HLS, dtype=np.uint8)
+    final = cv2.cvtColor(image_HLS, cv2.COLOR_HLS2BGR)  # Conversion to RGB
+
+    if(isAlphaExist):
+        final = np.dstack([final, alpha])
+
+    img_code = b64kit.image_to_base64(final)
+    print(sys._getframe().f_code.co_name +
+          " finished in " + "{:.2f}".format(time.time()-start)+" s")
+    return img_code
+
+
+def moon(baseString):
+    print(sys._getframe().f_code.co_name + " running")
+    start = time.time()
+    img = b64kit.base64_to_image(baseString)
+
+    isAlphaExist = False
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
+
+    # convert to LAB color space
+    output = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+    # split into channels
+    L, A, B = cv2.split(output)
+    # Interpolation values
+    originalValues = np.array([0, 15, 30, 50, 70, 90, 120, 160, 180, 210, 255])
+    values = np.array([0, 0, 5, 15, 60, 110, 150, 190, 210, 230, 255])
+
+    # create lookup table
+    allValues = np.arange(0, 256)
+
+    # Creating the lookuptable
+    lookuptable = np.interp(allValues, originalValues, values)
+
+    # apply mapping for L channels
+    L = cv2.LUT(L, lookuptable)
+
+    # convert to uint8
+    L = np.uint8(L)
+
+    # merge back the channels
+    output = cv2.merge([L, A, B])
+
+    # convert back to BGR color space
+    output = cv2.cvtColor(output, cv2.COLOR_LAB2BGR)
+
+    # desaturate the image
+    # convert to HSV color space
+    output = cv2.cvtColor(output, cv2.COLOR_BGR2HSV)
+
+    # split into channels
+    H, S, V = cv2.split(output)
+
+    # Multiply S channel by saturation scale value
+    S = S * 0.01
+
+    # convert to uint8
+    S = np.uint8(S)
+
+    # limit the values between 0 and 256
+    S = np.clip(S, 0, 255)
+
+    # merge back the channels
+    output = cv2.merge([H, S, V])
+
+    # convert back to BGR color space
+    final = cv2.cvtColor(output, cv2.COLOR_HSV2BGR)
+    if(isAlphaExist):
+        final = np.dstack([final, alpha])
+
+    img_code = b64kit.image_to_base64(final)
+    print(sys._getframe().f_code.co_name +
+          " finished in " + "{:.2f}".format(time.time()-start)+" s")
+    return img_code
+
+
+def blueish(baseString):
+    print(sys._getframe().f_code.co_name + " running")
+    start = time.time()
+    img = b64kit.base64_to_image(baseString)
+    original = img.copy()
+
+    isAlphaExist = False
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
+
+    for i in range(3):
+        if i == 2:
+            # creating table for exponent
+            table = np.array([min((i**1.05), 255)
+                              for i in np.arange(0, 256)]).astype("uint8")
+            img[:, :, i] = cv2.LUT(img[:, :, i], table)
+        else:
+            img[:, :, i] = 0  # setting values of all other slices to 0
+
+    final = img
     if(isAlphaExist):
         final = np.dstack([final, alpha])
 

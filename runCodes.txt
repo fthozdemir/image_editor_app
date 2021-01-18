@@ -11,12 +11,12 @@ source env/bin/activate
 pip install -r requirements.txt
 flask run
 
-----docker--------------
+-------docker--------------
 sudo docker build -t image-editor-app:latest .
 sudo docker run image-editor-app
 
 
-------heroku docker build--------
+-------heroku docker build--------
 sudo heroku container:push web
 sudo heroku container:release web
 heroku logs --tail
