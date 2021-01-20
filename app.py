@@ -244,7 +244,7 @@ def autocon():
 def abstractify():
     session["output"] = "data:image/png;base64," + \
         filter.abstractify(session["image"])
-    session["op_name"] = "ABSTRACTIFY"
+    session["op_name"] = "NOTIONAL"
     return redirect(url_for("home"))
 
 
