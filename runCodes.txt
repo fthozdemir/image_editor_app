@@ -17,6 +17,8 @@ sudo docker run image-editor-app
 
 
 -------heroku docker build--------
+heroku login -i
+--> index içerisindeki https kodunu uncomment yapmayý unutma
 sudo heroku container:push web
 sudo heroku container:release web
 heroku logs --tail
