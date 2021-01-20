@@ -182,17 +182,36 @@ def histogramEqualizer(baseString):
           " finished in " + "{:.2f}".format(time.time()-start)+" s")
     return img_code
 
+
 def contrast(baseString, c_value):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
     img = b64kit.base64_to_image(baseString)
+    isAlphaExist = False
+    if(len(img.shape) == 2):
+        grayed = img
+    else:
+        print(len(img.shape))
+
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
+
     factor = c_value/50.0
-    final=img
-    
+    final = img
+
     for y in range(img.shape[0]):
         for x in range(img.shape[1]):
-            for c in range(img.shape[2]):
-                final[y,x,c] = np.clip(factor*img[y,x,c], 0, 255)
+            try:
+                for c in range(img.shape[2]):
+                    final[y, x, c] = np.clip(factor*img[y, x, c], 0, 255)
+            except:
+                final[y, x] = np.clip(factor*img[y, x], 0, 255)
+    if(isAlphaExist):
+        final = np.dstack([final, alpha])
 
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +

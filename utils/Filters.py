@@ -122,20 +122,31 @@ def pixelArt(baseString):
 def popArt(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
+    img = b64kit.base64_to_image(baseString)
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
     background_colour = [224, 247, 20]
     dots_colour = (247, 19, 217)
     max_dots = 120
 
-    original_image = b64kit.base64_to_image(baseString)
-    original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
-    original_image_height = original_image.shape[0]
-    original_image_width = original_image.shape[1]
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    original_image_height = img.shape[0]
+    original_image_width = img.shape[1]
 
     if original_image_height == max(original_image_height, original_image_width):
-        downsized_image = cv2.resize(original_image, (int(
+        downsized_image = cv2.resize(img, (int(
             original_image_height*(max_dots/original_image_width)), max_dots))
     else:
-        downsized_image = cv2.resize(original_image, (max_dots, int(
+        downsized_image = cv2.resize(img, (max_dots, int(
             original_image_height*(max_dots/original_image_width))))
     downsized_image_height = downsized_image.shape[0]
     downsized_image_width = downsized_image.shape[1]
@@ -154,13 +165,16 @@ def popArt(baseString):
     width = int(blank_image.shape[1] * 10 / 100)
     height = int(blank_image.shape[0] * 10 / 100)
 
-    # dsize
-    dsize = (width, height)
+    # dsize because output is too large
+    dsize = (original_image_width, original_image_height)
 
     # resize image
-    output = cv2.resize(blank_image, dsize)
+    final = cv2.resize(blank_image, dsize)
 
-    img_code = b64kit.image_to_base64(output)
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
+
+    img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
           " finished in " + "{:.2f}".format(time.time()-start)+" s")
     return img_code
@@ -214,7 +228,18 @@ def oldtv(baseString):
 def sketch(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
 
     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     inverted_gray_image = 255 - gray_image
@@ -223,6 +248,9 @@ def sketch(baseString):
     inverted_blurred_img = 255 - blurred_img
 
     final = cv2.divide(gray_image, inverted_blurred_img, scale=256.0)
+
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
 
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
@@ -233,10 +261,19 @@ def sketch(baseString):
 def splash(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
-    alpha = img[:, :, 3]  # Channel 3 //
-    img = img[:, :, :3]
+
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
 
     res = np.zeros(img.shape, np.uint8)  # creating blank mask for result
     l = 15  # the lower range of Hue we want
@@ -247,12 +284,15 @@ def splash(baseString):
     # region which has to be in color
     res1 = cv2.bitwise_and(img, img, mask=mask)
     # region which has to be in grayscale
+    print("2")
+
     res2 = cv2.bitwise_and(gray, gray, mask=inv_mask)
     for i in range(3):
         res[:, :, i] = res2  # storing grayscale mask to all three slices
     final = cv2.bitwise_or(res1, res)  # joining grayscale and color region
 
-    final = np.dstack([final, alpha])
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
 
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
@@ -263,7 +303,19 @@ def splash(baseString):
 def sepya(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
+
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
 
     # converting to float to prevent loss
     img = np.array(img, dtype=np.float64)
@@ -272,9 +324,10 @@ def sepya(baseString):
                                         [0.272, 0.534, 0.131]]))  # multipying image with special sepia matrix
     # normalizing values greater than 255 to 255
     img[np.where(img > 255)] = 255
-    img = np.array(img, dtype=np.uint8)  # converting back to int
+    final = np.array(img, dtype=np.uint8)  # converting back to int
 
-    final = img
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
 
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
@@ -285,7 +338,19 @@ def sepya(baseString):
 def cartoon(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+            print(isAlphaExist)
+        except:
+            pass
 
     img_small = cv2.pyrDown(img)
     num_iter = 5
@@ -301,6 +366,9 @@ def cartoon(baseString):
     img_edge = cv2.cvtColor(img_edge, cv2.COLOR_GRAY2BGR)
     final = cv2.bitwise_and(img, img_edge)
 
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
+
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
           " finished in " + "{:.2f}".format(time.time()-start)+" s")
@@ -310,7 +378,20 @@ def cartoon(baseString):
 def oily(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
+
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
+
     height, width, channels = img.shape
 
     # Grayscale
@@ -326,8 +407,8 @@ def oily(baseString):
         for j in range(0, width):
             max_level_arr = []
             levelMap = {}  # k: level, v: list of original pixel values
-            for m in range(-4, 4):
-                for n in range(-4, 4):
+            for m in range(-3, 3):
+                for n in range(-3, 3):
                     # Handling out of bounds
                     if i + m >= height or i + m < 0:
                         m = -m
@@ -351,6 +432,9 @@ def oily(baseString):
                 g_sum += g
                 r_sum += r
             final[i, j] = [b_sum // size, g_sum // size, r_sum // size]
+
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
 
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
@@ -402,7 +486,19 @@ def abstractify(baseString):
 def warm(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
+
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
 
     increaseLookupTable = spreadLookupTable(
         [0, 64, 128, 256], [0, 80, 160, 256])
@@ -414,6 +510,9 @@ def warm(baseString):
     blue_channel = cv2.LUT(blue_channel, decreaseLookupTable).astype(np.uint8)
     final = cv2.merge((red_channel, green_channel, blue_channel))
 
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
+
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
           " finished in " + "{:.2f}".format(time.time()-start)+" s")
@@ -423,7 +522,19 @@ def warm(baseString):
 def cold(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
+
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
+    if(len(img.shape) == 2):
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    else:
+        try:
+            alpha = img[:, :, 3]  # Channel 3 //have alpha channel or not
+            img = img[:, :, :3]  # Channels 0..2
+            isAlphaExist = True
+        except:
+            pass
 
     increaseLookupTable = spreadLookupTable(
         [0, 64, 128, 256], [0, 80, 160, 256])
@@ -434,6 +545,9 @@ def cold(baseString):
     blue_channel = cv2.LUT(blue_channel, increaseLookupTable).astype(np.uint8)
     final = cv2.merge((red_channel, green_channel, blue_channel))
 
+    if(isAlphaExist):  # add aplha channel if it has
+        final = np.dstack([final, alpha])
+
     img_code = b64kit.image_to_base64(final)
     print(sys._getframe().f_code.co_name +
           " finished in " + "{:.2f}".format(time.time()-start)+" s")
@@ -443,8 +557,9 @@ def cold(baseString):
 def lines(baseString):
     print(sys._getframe().f_code.co_name + " running")
     start = time.time()
+    # convert base64 string to cv image
     img = b64kit.base64_to_image(baseString)
-    isAlphaExist = False
+    isAlphaExist = False  # seperate the alpha channel for not lose transparency
     if(len(img.shape) == 2):
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     else:
@@ -456,7 +571,7 @@ def lines(baseString):
             pass
     final = cv2.Canny(img, 100, 200)
 
-    if(isAlphaExist):
+    if(isAlphaExist):  # add aplha channel if it has
         final = np.dstack([final, alpha])
 
     img_code = b64kit.image_to_base64(final)

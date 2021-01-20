@@ -149,7 +149,12 @@ def test():
     cv2.destroyAllWindows()
 
 
-test()
+for i in range(10):
+    for j in range(10):
+        print(i)
+        print(j)
+        j += 1
+    i += 1
 
 # baseString = image_to_base64(test_img)
 # out = rotate(baseString)
