@@ -76,6 +76,11 @@
 
       {% if (output | length>25)%}
       <img src="{{output}}" alt="output_image" style="max-height: 50vh;" class="center" />
+      {% elif ( orginal!="no Image")%}
+      <h5 style="text-align:center; font-size:50px"> 
+        <span class="left-arrow">&#8592</span>
+        <span class="bot-arrow"> &#8595</span>
+        Select an Effect </h5>
       {%endif%}
       <div class="most-right">
         <h5>{{op_name}}</h5>

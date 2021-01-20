@@ -390,6 +390,12 @@ input[type="number"]::placeholder {
 .w-clearfix:after {
   clear: both;
 }
+.bot-arrow {
+  display: none;
+}
+.left-arrow {
+  display: inline;
+}
 
 @media (max-width: 991px) {
   .about {
@@ -408,10 +414,15 @@ input[type="number"]::placeholder {
     float: none;
     clear: none;
   }
-  }
   .image {
     margin-bottom: 35px;
     margin-left: 18%;
+  }
+  .bot-arrow {
+    display: inline;
+  }
+  .left-arrow {
+    display: none;
   }
 }
 
@@ -435,6 +446,12 @@ input[type="number"]::placeholder {
   h5 {
     font-size: 75px;
   }
+  .bot-arrow {
+    display: inline;
+  }
+  .left-arrow {
+    display: none;
+  }
 }
 
 @media (max-width: 479px) {
@@ -449,7 +466,7 @@ input[type="number"]::placeholder {
     position: static;
     width: 100%;
     height: 100vh;
-    padding: 25px 45px 75px;
+    padding: 25px 75px 25px 0px;
   }
   .content-wrapper {
     width: 100%;
@@ -476,5 +493,11 @@ input[type="number"]::placeholder {
   .image-logo {
     width: 78%;
     margin-left: 18%;
+  }
+  .bot-arrow {
+    display: inline;
+  }
+  .left-arrow {
+    display: none;
   }
 }
