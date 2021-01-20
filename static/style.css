@@ -408,16 +408,6 @@ input[type="number"]::placeholder {
     float: none;
     clear: none;
   }
-  .about-copy {
-    width: 100%;
-    margin-top: 35px;
-  }
-  .social {
-    opacity: 1;
-  }
-  .about_container {
-    position: static;
-    width: 65%;
   }
   .image {
     margin-bottom: 35px;
@@ -442,19 +432,23 @@ input[type="number"]::placeholder {
   .footer-p {
     text-align: right;
   }
+  h5 {
+    font-size: 75px;
+  }
 }
 
 @media (max-width: 479px) {
-  .about {
-    width: auto;
-    margin-top: 35px;
-    font-size: 30px;
-    line-height: 36px;
+  .mostCenter {
+    margin-top: -10px;
+    padding-bottom: 25px;
+  }
+  h5 {
+    font-size: 50px;
   }
   .sidebar-wrapper {
     position: static;
     width: 100%;
-    height: auto;
+    height: 100vh;
     padding: 25px 45px 75px;
   }
   .content-wrapper {
@@ -463,45 +457,6 @@ input[type="number"]::placeholder {
   }
   .logo {
     margin-top: 25px;
-  }
-  .about-copy {
-    width: 100%;
-  }
-  .pros_app {
-    height: auto;
-  }
-  .gp_watch_img {
-    width: 95%;
-    margin-bottom: -35px;
-    margin-left: 10%;
-  }
-  .title_sub {
-    margin-top: -10px;
-  }
-  .social {
-    margin-top: 45px;
-  }
-
-  .pros_img {
-    display: block;
-    width: 75%;
-    margin-left: 14%;
-  }
-  .about_container {
-    position: static;
-    width: 100%;
-  }
-  .community {
-    padding-left: 45px;
-  }
-  .quik_img {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 20px;
-  }
-
-  .design_inc {
-    margin-left: 25px;
   }
   .dw_img {
     height: 100%;
