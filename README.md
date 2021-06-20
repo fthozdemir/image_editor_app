@@ -2,7 +2,8 @@
 
 This just an image editor application which created with python. Nothing more.<br>
 Run on Flask service. For a simple GUI HTML, CSS and JS<br>
-For a quick demo, check this out: https://just-an-image-editor.herokuapp.com/
+For a quick demo, check this out: https://just-an-image-editor.herokuapp.com/  <br>
+(May need to wait 1 min for initiliazing heroku app on visit)
 
 ## How to install & Run
 
