@@ -44,7 +44,7 @@ create an virtual enviroment `env` and activate it
 
 ```
 python -m venv ./env/
-.\virtual\Scripts\activate
+.\env\Scripts\activate
 ```
 
 install requirements
