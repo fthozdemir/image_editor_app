@@ -13,10 +13,10 @@ Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy==1.19.4
 opencv-python==4.4.0.46
-Pillow==8.3.2
+Pillow==9.0.1
 python-engineio==4.0.0
 python-socketio==5.0.3
 scipy==1.5.4
 Shapely==1.7.1
-waitress==1.4.4
+waitress==2.1.1
 Werkzeug==1.0.1
