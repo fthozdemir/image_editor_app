@@ -18,5 +18,5 @@ python-engineio==4.0.0
 python-socketio==5.0.3
 scipy==1.5.4
 Shapely==1.7.1
-waitress==2.1.1
+waitress==2.1.2
 Werkzeug==1.0.1
