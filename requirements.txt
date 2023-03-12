@@ -1,4 +1,4 @@
-python_version = "3.9"
+python_version==3.9
 numpy==1.19.3
 bidict==0.21.2
 cachelib==0.1.1
