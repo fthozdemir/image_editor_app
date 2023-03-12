@@ -1,4 +1,4 @@
-python_version=="3.9"
+numpy==1.24.0
 bidict==0.21.2
 cachelib==0.1.1
 click==7.1.2
@@ -12,7 +12,6 @@ imageio==2.9.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
-numpy==1.24.0
 opencv-python==4.4.0.46
 Pillow==9.0.1
 python-engineio==4.0.0
