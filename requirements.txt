@@ -1,4 +1,4 @@
-numpy==1.24.0
+numpy==1.24.0;python_version=="3.9"
 bidict==0.21.2
 cachelib==0.1.1
 click==7.1.2
